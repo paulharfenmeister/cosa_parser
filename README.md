@@ -1,0 +1,2 @@
+# Cosa Parser #
+[![Coverage Status](https://coveralls.io/repos/paulharfenmeister/cosa_parser/badge.svg?branch=master&service=github)](https://coveralls.io/github/paulharfenmeister/cosa_parser?branch=master)
