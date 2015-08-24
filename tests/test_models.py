@@ -64,6 +64,25 @@ class TestAthlet(unittest.TestCase):
                          Athlet.__split_name__(athlet_name))
 
 
+class TestEvent(unittest.TestCase):
+    def test_create_event(self):
+        meeting = Meeting("Meeting")
+        date = datetime.date(2015, 8, 24)
+        event = meeting.get_or_create_event("100 m U20 Männer", date)
+        self.assertEqual(event, meeting.get_or_create_event(
+            "100 m U20 Männer", date))
+
+    def test_add_result(self):
+        meeting = Meeting("Meeting")
+        date = datetime.date(2015, 8, 24)
+        event = meeting.get_or_create_event("100 m U20 Männer", date)
+        athlet = meeting.get_or_create_athlet("Bolt, Usain", 1986, "Club")
+        r = Result(athlet, event, 9.58, 's', '+1,3', 1)
+        self.assertFalse(event.results)
+        event.add_result(r)
+        self.assertIn(r, event.results)
+
+
 class TestResult(unittest.TestCase):
     def test_result_is_final(self):
         meeting = Meeting("Meeting")
