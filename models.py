@@ -3,6 +3,7 @@ class Meeting:
         self.name = name
         self.days = []
         self.athlets = []
+        self.events = []
 
     def get_or_create_day(self, date):
         day = [day for day in self.days if day.date == date]
@@ -24,6 +25,17 @@ class Meeting:
             self.athlets.append(athlet)
             return athlet
 
+    def get_or_create_event(self, name, date):
+        is_already_event = [e for e in self.events
+                            if e.name == name and
+                            e.day.date == date]
+        if is_already_event:
+            return is_already_event[0]
+        else:
+            event = Event(name, self.get_or_create_day(date))
+            self.events.append(event)
+            return event
+
 
 class MeetingDay:
     def __init__(self, meeting, date):
@@ -32,11 +44,12 @@ class MeetingDay:
 
 
 class Event:
-    def __init__(self, name, day):
+    def __init__(self, name, day, is_final=True):
         self.name = name
         self.day = day
         self.ak = ""
         self.eventtype = ""
+        self.is_final = is_final
         self.results = []
 
     def add_result(self, result):
@@ -64,14 +77,13 @@ class Athlet:
 
 
 class Result:
-    def __init__(self, athlet, event, value, unit=None, wind=None, rang=None,
-                 is_final=True):
+    def __init__(self, athlet, event, value, unit=None, wind=None, rang=None):
         self.athlet = athlet
         self.event = event
         self.value = value
         self.unit = unit
         self.wind = wind
         self.rang = rang
-        self.is_final = is_final
-        self.athlet.add_result(self)
-        self.event.add_result(self)
+
+    def is_final(self):
+        return self.event.is_final
