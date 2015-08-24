@@ -3,5 +3,8 @@ python: 3.4
 install:
 - pip install -r requirements.txt
 - pip install coveralls
+- pip install coverage
 script:
-- python -m unittest discover tests
+- coverage run -m unittest discover tests
+after_succes:
+  coveralls
