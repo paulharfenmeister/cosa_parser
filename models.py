@@ -62,10 +62,6 @@ class Athlete:
         self.year_of_birth = year_of_birth
         self.sex = sex
         self.club = club
-        self.results = []
-
-    def add_result(self, result):
-        self.results.append(result)
 
     def name(self):
         return "%s, %s" % (self.last_name, self.first_name)
