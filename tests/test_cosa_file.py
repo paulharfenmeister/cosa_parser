@@ -45,7 +45,32 @@ class TestCosaHTML(unittest.TestCase):
         non_event_fragment_class = 'AklZ'
 
         for _, fragment in found_fragments:
-            elems_with_non_event_fragment_class = [elem.find_class(non_event_fragment_class)
-                                                   for elem in fragment]
+            elems_with_non_event_fragment_class = [
+                elem.find_class(non_event_fragment_class)
+                for elem in fragment]
 
             self.assertTrue(not any(elems_with_non_event_fragment_class))
+
+    def test_creates_meeting(self):
+        meeting = self.test_cosa.meeting()
+        found_name = meeting.name
+        expected_name = '42. Fischbacher Abendsportfeste'
+
+        self.assertEqual(found_name, expected_name)
+
+    def test_finds_event_descriptions(self):
+        event_fragment = list(self.test_cosa.event_fragments())[0][1]
+        found_description_fragments = list(self.test_cosa.
+            event_description_fragments_in_event_fragment(
+            event_fragment))
+
+        self.assertEqual(len(found_description_fragments), 2)
+
+    def test_finds_event_results(self):
+        event_fragment = list(self.test_cosa.event_fragments())[0][1]
+        found_result_fragments = list(self.test_cosa.
+            result_fragments_in_event_fragment(
+            event_fragment
+        ))
+
+        self.assertEqual(len(found_result_fragments), 1)
