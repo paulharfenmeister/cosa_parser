@@ -58,10 +58,11 @@ class CosaHTML(CosaResource):
 
     @staticmethod
     def build_from_event_fragment(event_fragment, age_class):
-        description_fragment = CosaHTML.event_description_fragments_in_event_fragment(
-            event_fragment)
-        result_fragments = CosaHTML.result_fragments_in_event_fragment(
-            event_fragment)
+        description_fragment = next(
+            CosaHTML.event_description_fragments_in_event_fragment(
+                event_fragment))
+        result_fragments = next(CosaHTML.result_fragments_in_event_fragment(
+            event_fragment))
 
         event_name = CosaHTML._get_text(description_fragment,
                                         css_classes.EVENT_NAME[0])

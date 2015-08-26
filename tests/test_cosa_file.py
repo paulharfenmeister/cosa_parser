@@ -73,3 +73,12 @@ class TestCosaHTML(unittest.TestCase):
         ))
 
         self.assertEqual(len(found_result_fragments), 1)
+
+    def test_builds_event_fragment(self):
+        events = [
+            CosaHTML.build_from_event_fragment(event_fragment, age_class=ageclass)
+            for ageclass, event_fragment in self.test_cosa.event_fragments()]
+        found_event_names = set([event.name for event in events])
+        expected_event_names = {'200 m Männer', 'Stundenlauf Männer'}
+
+        self.assertSetEqual(found_event_names, expected_event_names)
