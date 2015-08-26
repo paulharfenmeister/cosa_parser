@@ -44,16 +44,21 @@ class MeetingDay:
 
 
 class Event:
-    def __init__(self, name, day, is_final=True):
+    def __init__(self, name, day):
         self.name = name
         self.day = day
-        self.ak = ""
+        self.age_class = ""
         self.eventtype = ""
-        self.is_final = is_final
         self.results = []
 
     def add_result(self, result):
         self.results.append(result)
+
+    def is_finale(self):
+        finale_keywords = [
+            'Finale',
+        ]
+        return any([keyword in self.eventtype for keyword in finale_keywords])
 
 
 class Athlete:
@@ -85,5 +90,5 @@ class Result:
         self.wind = wind
         self.rang = rang
 
-    def is_final(self):
-        return self.event.is_final
+    def is_finale(self):
+        return self.event.is_finale()

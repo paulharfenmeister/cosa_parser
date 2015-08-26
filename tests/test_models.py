@@ -82,12 +82,23 @@ class TestEvent(unittest.TestCase):
         event.add_result(r)
         self.assertIn(r, event.results)
 
+    def test_event_type_finale(self):
+        meeting = Meeting("Meeting")
+        date = datetime.date(2015, 8, 24)
+        event = meeting.get_or_create_event("100 m U20 Männer", date)
+        event.eventtype = "1. Vorlauf"
+        self.assertFalse(event.is_finale())
+        event.eventtype = "Finale"
+        self.assertTrue(event.is_finale())
+        event.eventtype = "Finale > aus gemischtem Wettbewerb"
+        self.assertTrue(event.is_finale())
+
 
 class TestResult(unittest.TestCase):
-    def test_result_is_final(self):
+    def test_result_is_finale(self):
         meeting = Meeting("Meeting")
         date = datetime.date(2015, 8, 24)
         event = meeting.get_or_create_event("100 m U20 Männer", date)
         athlete = meeting.get_or_create_athlete("Bolt, Usain", 1986, "Club")
         r = Result(athlete, event, 9.58, 's', '+1,3', 1)
-        self.assertEqual(r.is_final(), event.is_final)
+        self.assertEqual(r.is_finale(), event.is_finale())
