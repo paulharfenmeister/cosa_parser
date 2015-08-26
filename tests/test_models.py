@@ -56,12 +56,12 @@ class TestAthlet(unittest.TestCase):
         first_name = "Firstname"
         athlet_name = "%s, %s" % (last_name, first_name)
         self.assertEqual((first_name, last_name),
-                         Athlet.__split_name__(athlet_name))
+                         Athlet._split_name_(athlet_name))
         last_name = "Last Name"
         first_name = "First Name"
         athlet_name = "%s, %s" % (last_name, first_name)
         self.assertEqual((first_name, last_name),
-                         Athlet.__split_name__(athlet_name))
+                         Athlet._split_name_(athlet_name))
 
 
 class TestEvent(unittest.TestCase):
