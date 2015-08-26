@@ -2,7 +2,7 @@ class Meeting:
     def __init__(self, name=""):
         self.name = name
         self.days = []
-        self.athlets = []
+        self.athletes = []
         self.events = []
 
     def get_or_create_day(self, date):
@@ -14,21 +14,21 @@ class Meeting:
             self.days.append(found_days)
             return found_days
 
-    def get_or_create_athlet(self, name, year_of_birth, club):
-        found_athlets = [a for a in self.athlets
-                             if a.name() == name and
-                             a.year_of_birth == year_of_birth]
-        if found_athlets:
-            return found_athlets[0]
+    def get_or_create_athlete(self, name, year_of_birth, club):
+        found_athletes = [a for a in self.athletes
+                          if a.name() == name and
+                          a.year_of_birth == year_of_birth]
+        if found_athletes:
+            return found_athletes[0]
         else:
-            athlet = Athlet(name, year_of_birth, club)
-            self.athlets.append(athlet)
-            return athlet
+            athlete = Athlete(name, year_of_birth, club)
+            self.athletes.append(athlete)
+            return athlete
 
     def get_or_create_event(self, name, date):
         found_events = [e for e in self.events
-                            if e.name == name and
-                            e.day.date == date]
+                        if e.name == name and
+                        e.day.date == date]
         if found_events:
             return found_events[0]
         else:
@@ -56,7 +56,7 @@ class Event:
         self.results.append(result)
 
 
-class Athlet:
+class Athlete:
     def __init__(self, name, year_of_birth, sex, club=""):
         self.first_name, self.last_name = self._split_name_(name)
         self.year_of_birth = year_of_birth
@@ -77,8 +77,8 @@ class Athlet:
 
 
 class Result:
-    def __init__(self, athlet, event, value, unit=None, wind=None, rang=None):
-        self.athlet = athlet
+    def __init__(self, athlete, event, value, unit=None, wind=None, rang=None):
+        self.athlete = athlete
         self.event = event
         self.value = value
         self.unit = unit
