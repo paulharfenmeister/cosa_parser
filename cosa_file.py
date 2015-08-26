@@ -13,7 +13,7 @@ from operator import xor
 
 class CosaHTML(CosaResource):
     def meeting(self):
-        fragment = self.meeting_fragment()
+        fragment = self._meeting_fragment()
         name = fragment.find_class(css_classes.MEETING_NAME[0])[0].text
         meeting = Meeting(name=name)
         return meeting
@@ -26,10 +26,10 @@ class CosaHTML(CosaResource):
         self.root = self.doc.getroot()
         self.body = self.root.findall('./body')[0]
 
-    def build(self):
+    def _build(self):
         pass
 
-    def event_fragments(self):
+    def _event_fragments(self):
         fragment = []
         ageclass = None
         reached_events = False
@@ -57,15 +57,15 @@ class CosaHTML(CosaResource):
 
         yield (ageclass, CosaHTML._filter_non_event_fragments(fragment))
 
-    def meeting_fragment(self):
+    def _meeting_fragment(self):
         return self.body.getchildren()[0]
 
     @staticmethod
-    def build_from_event_fragment(event_fragment, age_class, meeting):
+    def _build_from_event_fragment(event_fragment, age_class, meeting):
         description_fragment = next(
-            CosaHTML.event_description_fragments_in_event_fragment(
+            CosaHTML._event_description_fragments_in_event_fragment(
                 event_fragment))
-        result_fragments = next(CosaHTML.result_fragments_in_event_fragment(
+        result_fragments = next(CosaHTML._result_fragments_in_event_fragment(
             event_fragment))
 
         event_name = CosaHTML._get_text(description_fragment,
@@ -76,7 +76,7 @@ class CosaHTML(CosaResource):
                                         css_classes.EVENT_TYPE)
 
         event = Event(event_name, CosaHTML._str_to_date(event_date))
-        results = [CosaHTML.build_from_result_fragment(result_fragment, meeting,
+        results = [CosaHTML._build_from_result_fragment(result_fragment, meeting,
                                                        age_class)
                    for result_fragment in result_fragments]
 
@@ -87,11 +87,11 @@ class CosaHTML(CosaResource):
         return event
 
     @staticmethod
-    def build_from_result_fragment(result_fragment, meeting, ageclass):
+    def _build_from_result_fragment(result_fragment, meeting, ageclass):
         pass
 
     @staticmethod
-    def build_athlete_from_result_fragment(result_fragment, meeting, ageclass):
+    def _build_athlete_from_result_fragment(result_fragment, meeting, ageclass):
         result_text = lambda css_class: CosaHTML._get_text(result_fragment,
                                                            css_class)
         athlete_name = result_text(css_classes.RESULT_ATHLETE_NAME)
@@ -106,13 +106,13 @@ class CosaHTML(CosaResource):
         return athlete
 
     @staticmethod
-    def event_description_fragments_in_event_fragment(event_fragment):
+    def _event_description_fragments_in_event_fragment(event_fragment):
         for fragment in event_fragment:
             if CosaHTML._find_classes(fragment, css_classes.EVENT_DESCRIPTION):
                 yield fragment
 
     @staticmethod
-    def result_fragments_in_event_fragment(event_fragment):
+    def _result_fragments_in_event_fragment(event_fragment):
         for fragment in event_fragment:
             if CosaHTML._find_classes(fragment,
                                       css_classes.RESULT_ATHLETE_NAME):
