@@ -3,7 +3,6 @@ import os
 import css_classes
 
 from cosa_file import CosaHTML
-from cosa_file import _used_css_classes
 
 TEST_DIRECTORY = os.path.dirname(__file__)
 
@@ -14,7 +13,7 @@ class TestCosaHTML(unittest.TestCase):
 
     def test_finds_all_css_classes(self):
         aklz_elem = self.test_cosa.root.find_class('body')[0]
-        found_classes = set(_used_css_classes(aklz_elem))
+        found_classes = set(CosaHTML._used_css_classes(aklz_elem))
         expected_classes = {'body', 'KopfZ1', 'KopfZ11', 'KopfZ12', }
 
         self.assertSetEqual(found_classes, expected_classes)
