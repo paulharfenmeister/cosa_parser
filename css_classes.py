@@ -5,7 +5,9 @@ AGE_CLASS = ('AklZ', )
 MEETING_NAME = ('KopfZ11', )
 
 # RESULT
-RESULT_ATHLETE_NAME = ('blENameASg', )
+RESULT_ATHLETE_NAME = ('blENameASg', 'blENameAsw', )
+RESULT_ATHLETE_BIRTHYEAR = ('blEJGg', 'blEJGw', )
+RESULT_ATHLETE_CLUB = ('blEVereing', 'blEVereinw', )
 
 # EVENT
 EVENT_NAME = ('blEWettb', )
