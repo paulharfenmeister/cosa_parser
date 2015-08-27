@@ -5,7 +5,6 @@ import re
 import sexes
 
 from resources import CosaResource
-from functools import reduce
 from models import *
 from datetime import date
 from operator import xor
@@ -134,9 +133,9 @@ class CosaHTML(CosaResource):
             return found_classes
 
         else:
-            return found_classes + reduce(lambda a, b: a + b,
-                                          [cls._used_css_classes(child) for
-                                           child in children])
+            return found_classes + [css_class for child in children
+                                    for css_class in
+                                    cls._used_css_classes(child)]
 
     @classmethod
     def _filter_non_event_fragments(cls, fragments):
@@ -148,17 +147,14 @@ class CosaHTML(CosaResource):
 
     @classmethod
     def _find_classes(cls, fragment, classes):
-        found_elems = reduce(lambda a, b: a + b,
-                             [fragment.find_class(css_class) for css_class in
-                              classes])
+        found_elems = [elem for css_class in
+                       classes for elem in fragment.find_class(css_class)]
         return found_elems
 
     @classmethod
     def _get_text(cls, fragment, css_classes):
-        elems = reduce(lambda a, b: a + b,
-                       [cls._find_classes(fragment_part, css_classes) for
-                        fragment_part in
-                        fragment])
+        elems = [elem for fragment_part in fragment for elem in
+                 cls._find_classes(fragment_part, css_classes)]
         texts = [elem.text for elem in elems]
         assert len(texts) <= 1, 'Selection should be unique.'
         return texts[0] if texts else ""
@@ -205,9 +201,3 @@ class CosaHTML(CosaResource):
         result.qualification_status = qualification_status or None
 
         return result
-
-
-
-
-
-
