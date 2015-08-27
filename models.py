@@ -75,7 +75,7 @@ class Athlete:
 class Result:
     def __init__(self, athletes, event, values, unit=None, wind=None,
                  place=None,
-                 noncompetetive=None, points=None, attempts=None,
+                 noncompetetive=None, points=None, attempts=list(),
                  overall_points=None, qualification_status=None):
         self.athletes = athletes
         self.event = event
@@ -94,8 +94,7 @@ class Result:
 
 
 class Attempt:
-    def __init__(self, number, result, wind=None, jump_type=None):
+    def __init__(self, number, jump_type=None, wind=None):
         self.number = number
-        self.result = result
         self.wind = wind
         self.jump_type = jump_type
