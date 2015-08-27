@@ -73,12 +73,11 @@ class Athlete:
 
 
 class Result:
-    def __init__(self, athletes, event, values, unit=None, wind=None,
+    def __init__(self, athletes, values, unit=None, wind=None,
                  place=None,
                  noncompetetive=None, points=None, attempts=list(),
                  overall_points=None, qualification_status=None):
         self.athletes = athletes
-        self.event = event
         self.values = values
         self.unit = unit
         self.points = points
@@ -88,9 +87,6 @@ class Result:
         self.attempts = attempts
         self.overall_points = overall_points
         self.qualification_status = qualification_status
-
-    def is_final(self):
-        return self.event.is_final
 
 
 class Attempt:
