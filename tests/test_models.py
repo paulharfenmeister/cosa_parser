@@ -42,15 +42,6 @@ class TestAthlet(unittest.TestCase):
         self.assertEqual(athlet, meeting.get_or_create_athlete(
             "Bolt, Usain", 1986, "Club"))
 
-    def test_add_result(self):
-        meeting = Meeting("Meeting")
-        athlete = meeting.get_or_create_athlete("Bolt, Usain", 1986, "Club")
-        date = datetime.date(2015, 8, 24)
-        event = meeting.get_or_create_event("100 m U20 Männer", date)
-        r = Result(athlete, event, 9.58, 's', '+1,3', 1)
-        athlete.add_result(r)
-        self.assertIn(r, athlete.results)
-
     def test_split_name(self):
         last_name = "Lastname"
         first_name = "Firstname"
@@ -91,3 +82,18 @@ class TestResult(unittest.TestCase):
         athlete = meeting.get_or_create_athlete("Bolt, Usain", 1986, "Club")
         r = Result(athlete, event, 9.58, 's', '+1,3', 1)
         self.assertEqual(r.is_final(), event.is_final)
+
+
+class TestAttempt(unittest.TestCase):
+    def test_create_attempt(self):
+        meeting = Meeting("Meeting")
+        date = datetime.date(2015, 8, 24)
+        event = meeting.get_or_create_event("Hochsprung U20 Männer", date)
+        athlete = meeting.get_or_create_athlete("Mustermann, Max", 1986, "Club")
+        r = Result(athlete, event, 1.45, 'm')
+        a1, a2, a3 = Attempt(1, 'x'), Attempt(1, 'x'), Attempt(1, 'o')
+        r.attempts.append(a1)
+        r.attempts.append(a2)
+        r.attempts.append(a3)
+        self.assertEqual(len(r.attempts), 3)
+        self.assertEqual(r.attempts, [a1, a2, a3])
