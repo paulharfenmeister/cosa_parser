@@ -78,7 +78,7 @@ class TestCosaHTML(unittest.TestCase):
     def test_builds_event_fragment(self):
         meeting = self.test_cosa.meeting()
         events = [
-            CosaHTML._build_from_event_fragment(event_fragment, ageclass,
+            CosaHTML._build_event(event_fragment, ageclass,
                                                meeting)
             for ageclass, event_fragment in self.test_cosa._event_fragments()]
         found_event_names = set([event.name for event in events])
@@ -103,7 +103,7 @@ class TestCosaHTML(unittest.TestCase):
         result_fragment = next(
             self.test_cosa._result_fragments_in_event_fragment(event_fragment))
         meeting = Meeting('Test')
-        athlete = CosaHTML._build_athlete_from_result_fragment(result_fragment,
+        athlete = CosaHTML._build_athlete(result_fragment,
                                                               meeting,
                                                               ageclass)
         found_athlete_name = athlete.last_name
