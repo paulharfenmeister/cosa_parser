@@ -68,7 +68,7 @@ class TestEvent(unittest.TestCase):
         date = datetime.date(2015, 8, 24)
         event = meeting.get_or_create_event("100 m U20 Männer", date)
         athlete = meeting.get_or_create_athlete("Bolt, Usain", 1986, "Club")
-        r = Result(athlete, event, 9.58, 's', '+1,3', 1)
+        r = Result(athlete, 9.58, unit='s', wind='+1,3', place=1)
         self.assertFalse(event.results)
         event.add_result(r)
         self.assertIn(r, event.results)
@@ -77,10 +77,8 @@ class TestEvent(unittest.TestCase):
 class TestAttempt(unittest.TestCase):
     def test_create_attempt(self):
         meeting = Meeting("Meeting")
-        date = datetime.date(2015, 8, 24)
-        event = meeting.get_or_create_event("Hochsprung U20 Männer", date)
         athlete = meeting.get_or_create_athlete("Mustermann, Max", 1986, "Club")
-        r = Result(athlete, event, 1.45, 'm')
+        r = Result(athlete, 1.45, unit='m')
         a1, a2, a3 = Attempt(1, 'x'), Attempt(1, 'x'), Attempt(1, 'o')
         r.attempts.append(a1)
         r.attempts.append(a2)
