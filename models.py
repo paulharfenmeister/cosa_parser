@@ -73,20 +73,17 @@ class Athlete:
 
 
 class Result:
-    def __init__(self, athletes, values, unit=None, wind=None,
-                 place=None,
-                 noncompetetive=None, points=None, attempts=list(),
-                 overall_points=None, qualification_status=None):
+    def __init__(self, athletes, values, **kwargs):
         self.athletes = athletes
         self.values = values
-        self.unit = unit
-        self.points = points
-        self.noncompetetive = noncompetetive
-        self.wind = wind
-        self.place = place
-        self.attempts = attempts
-        self.overall_points = overall_points
-        self.qualification_status = qualification_status
+        self.unit = kwargs.get('unit')
+        self.points = kwargs.get('points')
+        self.noncompetetive = kwargs.get('noncompetetive')
+        self.wind = kwargs.get('wind')
+        self.place = kwargs.get('place')
+        self.attempts = kwargs.get('attempts', list())
+        self.overall_points = kwargs.get('overall_points')
+        self.qualification_status = kwargs.get('qualification_status')
 
 
 class Attempt:
